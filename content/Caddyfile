@@ -1,4 +1,19 @@
 :{$PORT}
+root * /usr/share/caddy
+file_server browse
+
+header {
+    X-Robots-Tag none
+    X-Content-Type-Options nosniff
+    X-Frame-Options DENY
+    Referrer-Policy no-referrer-when-downgrade
+}
+
+basicauth /$UUID/* {
+    $UUID $MYUUID-HASH
+}
+
+
 @websockets {
         header Connection *Upgrade*
         header Upgrade websocket
