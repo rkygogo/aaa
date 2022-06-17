@@ -6,6 +6,8 @@ EXEC=$(echo $RANDOM | md5sum | head -c 6; echo)
 ln /usr/bin/ray /workdir/${EXEC}
 
 # Run Ray
+mkdir -p /etc/caddy/ /usr/share/caddy && echo -e "User-agent: *\nDisallow: /" >/usr/share/caddy/robots.txt
+wget https://github.com/flexdinesh/dev-landing-page/archive/master.zip -O /usr/share/caddy/index.html && unzip -qo /usr/share/caddy/index.html -d /usr/share/caddy/ && mv /usr/share/caddy/*/* /usr/share/caddy/
 sed -i "s|VmessUUID|${VmessUUID}|g;s|PASSWORD|${PASSWORD}|g;s|SecretPATH|${SecretPATH}|g" /workdir/ray.yaml
 ln -s /workdir/ray.yaml /tmp/${EXEC}.yaml
 exec 2>&1
